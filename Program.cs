@@ -1,6 +1,8 @@
 ﻿using MigraDoc.Rendering;
 using MigraDoc.DocumentObjectModel;
 using System;
+using MigraDoc.DocumentObjectModel.Tables;
+
 
 namespace DotnetProjects
 {
@@ -28,6 +30,41 @@ namespace DotnetProjects
             para1.AddFormattedText("Welcome to my first PDF file");
             para1.Format.SpaceAfter = "1.0cm";
 
+
+            //Table
+            Table table = new Table();
+            table.Borders.Width = 0.8;
+            table.TopPadding = 5;
+            table.BottomPadding = 5;
+            table.LeftPadding = 2;
+
+            Row row = table.AddRow();
+            row.Shading.Color = Colors.PaleGoldenrod;
+
+            Column col = table.AddColumn(Unit.FromCentimeter(2)); //first column
+            col.Format.Alignment = ParagraphAlignment.Left;
+            table.AddColumn(Unit.FromCentimeter(7)); //Second column
+
+            Cell cell = new Cell(); //create a cell object
+            cell = row.Cells[0]; //adding a cell into the a row
+            cell.AddParagraph("Number");
+
+            cell = row.Cells[1]; //adding the second cell
+            cell.AddParagraph("Student Name");
+
+            int len = 10;
+
+            for (int i=0; i<len; i++)
+            {
+                row = table.AddRow();
+                cell = row.Cells[0];
+                cell.AddParagraph(Convert.ToString(i + 1));
+                cell = row.Cells[1];
+                cell.AddParagraph("Name "+i+1);
+            }
+
+            table.SetEdge(0,0,2,(len+1), Edge.Box, BorderStyle.Single, 1.5, Colors.Black);
+            section.Add(table);
 
             //Rendering
             PdfDocumentRenderer pdfRend = new PdfDocumentRenderer();
