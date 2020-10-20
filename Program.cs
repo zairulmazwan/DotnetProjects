@@ -36,14 +36,15 @@ namespace DotnetProjects
             table.Borders.Width = 0.8;
             table.TopPadding = 5;
             table.BottomPadding = 5;
-            table.LeftPadding = 2;
+            table.LeftPadding = 10;
 
-            Row row = table.AddRow();
-            row.Shading.Color = Colors.PaleGoldenrod;
-
+            //the ordering is important! create column first
             Column col = table.AddColumn(Unit.FromCentimeter(2)); //first column
             col.Format.Alignment = ParagraphAlignment.Left;
             table.AddColumn(Unit.FromCentimeter(7)); //Second column
+
+            Row row = table.AddRow();
+            row.Shading.Color = Colors.PaleGoldenrod;
 
             Cell cell = new Cell(); //create a cell object
             cell = row.Cells[0]; //adding a cell into the a row
@@ -60,7 +61,7 @@ namespace DotnetProjects
                 cell = row.Cells[0];
                 cell.AddParagraph(Convert.ToString(i + 1));
                 cell = row.Cells[1];
-                cell.AddParagraph("Name "+i+1);
+                cell.AddParagraph("Name "+(i+1));
             }
 
             table.SetEdge(0,0,2,(len+1), Edge.Box, BorderStyle.Single, 1.5, Colors.Black);
